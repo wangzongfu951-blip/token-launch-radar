@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="kicker">MAKE.FUN BOUNTY · TOKEN-RADAR-01</p>
+    <h1>Token Launch Radar</h1>
+    <p class="lede">Which protocols without a token would be worth the most if they launched one — ranked by an implied value built from the snapshot's own figures, with a farm plan for each.</p>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+<main class="wrap">
+  <nav class="tabs" aria-label="Views">
+    <button id="tab-board" class="tab on" type="button">Pre-token board</button>
+    <button id="tab-live" class="tab" type="button">Live tokens</button>
+  </nav>
+  <section class="controls" aria-label="Filter and sort">
+    <label>Search <input id="q" type="search" placeholder="Protocol name or slug" autocomplete="off"></label>
+    <label>Category <select id="cat"><option value="">All categories</option></select></label>
+    <label>Chain <select id="chain"><option value="">All chains</option></select></label>
+    <label>Min TVL <select id="mintvl">
+      <option value="0">Any TVL</option>
+      <option value="50000000">$50M+</option>
+      <option value="100000000">$100M+</option>
+      <option value="500000000">$500M+</option>
+      <option value="1000000000">$1B+</option>
+    </select></label>
+    <label>Sort by <select id="sort">
+      <option value="implied">Implied value</option>
+      <option value="tvl">TVL</option>
+      <option value="growth">7-day change</option>
+      <option value="age">Age</option>
+      <option value="name">Name</option>
+    </select></label>
+  </section>
+  <p class="count" id="count"></p>
+  <section id="detail" class="detail" hidden></section>
+  <div class="tablewrap">
+    <table id="board">
+      <thead><tr>
+        <th data-k="rank">#</th><th data-k="name">Protocol</th><th data-k="category">Category</th>
+        <th data-k="chains">Chains</th><th data-k="tvl" class="num">TVL</th><th data-k="growth" class="num">7d</th>
+        <th data-k="age" class="num">Age</th><th data-k="implied" class="num">Implied value</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <section class="method" id="method">
+    <h2>How the value is built</h2>
+    <p>Implied value = TVL × <strong>category multiple</strong> × growth × maturity × new-protocol × breadth. The multiple is the median market-cap / TVL of the live-token protocols in the same category — the market's own price for a unit of TVL — falling back to the global median where a category has fewer than three live protocols, and clamped to 0.05–0.50. Growth uses the 7-day TVL change clamped to −50…+150%. Maturity rises with the days since listing, to 1.00 at three years; a protocol under 90 days old is discounted 20% as unproven. Breadth adds 4% per extra chain, to five. No name is ever special-cased: the same function scores every row.</p>
+    <h3>Category multiples</h3>
+    <table id="multiples"><thead><tr><th>Category</th><th class="num">Multiple</th><th class="num">Live sample</th><th>Source</th></tr></thead><tbody></tbody></table>
+    <p class="note">A protocol is listed as pre-token when its DefiLlama record carries no token — no market cap, no CoinGecko id, no symbol. That is what the record says, never proof it has none. Farm plans are suggestions, not advice; a launch may never happen, and an airdrop is never guaranteed.</p>
+  </section>
+  <footer>
+    <p>Snapshot: DefiLlama public API, fetched <span id="asof"></span> · Watchlist floor $50,000,000 TVL · Model radar-2 · Built by an AI agent for make.fun's token-radar-01 bounty.</p>
+  </footer>
+</main>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
